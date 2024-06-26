@@ -1,6 +1,6 @@
-FROM elixir:1.13-alpine as dep
+FROM elixir:1.13-alpine AS dep
 
-WORKDIR /src
+WORKDIR src
 ENV MIX_ENV=prod
 
 # To build assets, Rustler
@@ -8,16 +8,16 @@ RUN apk add git python3 cargo build-base
 
 COPY mix.exs mix.lock ./
 COPY config .
-RUN mix local.hex --force && \
-    mix local.rebar --force && \
-    mix deps.get && \
-    mix deps.compile
 
+RUN mix local.hex --force
+RUN mix local.rebar --force
+RUN mix deps.get
 
 COPY . .
 
-FROM node:16-alpine as web
+FROM node:16-alpine AS web
 
+WORKDIR /
 COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm ci --prefix ./assets
 
@@ -25,9 +25,11 @@ COPY --from=dep /src .
 
 RUN cd assets && npm run deploy
 
-FROM dep as build
+FROM dep AS build
 
-COPY --from=web /priv .
+RUN mix deps.compile
+
+COPY --from=web /priv/static priv/static
 
 RUN mix deps.clean mime --build
 RUN mix assets.deploy
