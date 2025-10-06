@@ -10,7 +10,7 @@ services:
         context: .
       environment:
         DATABASE_URL: "postgres://postgres:postgres@postgres/postgres"
-        SECRET_KEY_BASE: "${SECRET_KEY_BASE}"
+        SECRET_KEY_BASE: "B/JNbadChrAhO/LcuQA4TU5iCeQzMNV/Qdm529OugebfosRj7B6El9cUi2Vg5C0h7rtlogEnOQhP/LwcDRIfOw=="
         URL_HOST: "${URL_HOST:-localhost}"
         URL_SCHEMA: "${URL_SCHEMA:-http}"
         URL_PORT: "${URL_PORT:-4000}"
