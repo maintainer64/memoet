@@ -1,9 +1,10 @@
 version: '3'
 services:
     memoet:
-      image: manhtai/memoet:latest
+      image: docker.io/maintainer64/memoet:latest
       ports:
         - "4000:4000"
+      platform: linux/amd64
       depends_on:
         - postgres
       build:
