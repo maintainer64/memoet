@@ -102,7 +102,6 @@ defmodule Memoet.MixProject do
     [
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
         "phx.digest"
       ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
